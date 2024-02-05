@@ -1,6 +1,6 @@
 package com.toyStore.toys.domain;
 
-public enum category {
+public enum ECategory {
     PELUCHES,
     BEBES,
     JUEGOSDEMESA,

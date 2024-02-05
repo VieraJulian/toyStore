@@ -1,5 +1,6 @@
 package com.toyStore.toys.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
@@ -11,15 +12,18 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @Table(name = "toysImages")
-public class toyImage {
+public class ToyImage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotEmpty
+
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "toy_id")
-    private toy toy;
+    private Toy toy;
     @NotEmpty
-    private String img;
+    private String imgUrl;
+    @NotEmpty
+    private String imgName;
 }
