@@ -21,4 +21,6 @@ public interface IToyInputPort {
     public List<Toy> getAllToysByCategory(String category, int page, int size);
 
     public String deleteToy(Long id) throws ToyNotFoundException;
+
+    public String updateStock(Long id, int quantityToDeduct);
 }

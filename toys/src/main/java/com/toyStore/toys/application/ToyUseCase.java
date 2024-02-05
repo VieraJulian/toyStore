@@ -237,4 +237,11 @@ public class ToyUseCase implements IToyInputPort {
 
         return "Toy with id " + id + " is deleted successfully";
     }
+
+    @Override
+    public String updateStock(Long id, int quantityToDeduct) {
+        methods.updateStock(id, quantityToDeduct);
+
+        return "Stock updated";
+    }
 }

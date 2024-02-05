@@ -90,4 +90,16 @@ public class ToyController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PatchMapping("/stock/{id}/{quantityToDeduct}")
+    public ResponseEntity<String> updateStock(@PathVariable Long id, @PathVariable int quantityToDeduct){
+        try {
+            String msj = inputPort.updateStock(id, quantityToDeduct);
+
+            return new ResponseEntity<>(msj, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Error editing stock", e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

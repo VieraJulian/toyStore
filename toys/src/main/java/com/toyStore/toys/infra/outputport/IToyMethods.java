@@ -18,4 +18,6 @@ public interface IToyMethods {
     public List<Toy> getByCategory(ECategory category, int page, int size);
 
     public void delete(Long id);
+
+    public void updateStock(Long id, int quantityToDeduct);
 }

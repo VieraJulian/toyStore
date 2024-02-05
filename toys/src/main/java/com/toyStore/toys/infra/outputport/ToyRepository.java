@@ -45,4 +45,9 @@ public class ToyRepository implements IToyMethods{
     public void delete(Long id) {
         myRepository.deleteById(id);
     }
+
+    @Override
+    public void updateStock(Long id, int quantityToDeduct) {
+        myRepository.updateStock(id, quantityToDeduct);
+    }
 }
