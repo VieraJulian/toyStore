@@ -15,7 +15,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-@DataJpaTest
 public class ToyRepositoryTest {
 
     @Autowired
