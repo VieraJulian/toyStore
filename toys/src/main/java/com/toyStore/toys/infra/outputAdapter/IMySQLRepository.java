@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+
 @Repository
 public interface IMySQLRepository extends JpaRepository<Toy, Long> {
 
