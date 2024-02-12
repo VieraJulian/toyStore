@@ -35,7 +35,12 @@ public class ToyUseCase implements IToyInputPort {
     private String dirPath = "src/main/java/com/toyStore/toys/infra/uploads/";
 
     @Override
-    public Toy createToy(ToyDTO toy, MultipartFile[] files) throws IOException {
+        public Toy createToy(ToyDTO toy, MultipartFile[] files) throws IOException {
+
+        if (files == null || files.length == 0) {
+            throw new IllegalArgumentException("The file is empty");
+        }
+
         // Get the discounted price
         BigDecimal finalPrice = toy.getPrice();
 
@@ -75,10 +80,6 @@ public class ToyUseCase implements IToyInputPort {
         List<ToyImage> images = new ArrayList<>();
 
         for (MultipartFile file : files) {
-
-            if (file.isEmpty()) {
-                throw new IllegalArgumentException("The file is empty");
-            }
 
             String fileName = StringUtils.cleanPath(System.currentTimeMillis() + "-" + file.getOriginalFilename());
             Path path = Paths.get(dirPath + fileName);
@@ -167,7 +168,6 @@ public class ToyUseCase implements IToyInputPort {
 
             for (MultipartFile file : files) {
                 String fileName = StringUtils.cleanPath(System.currentTimeMillis() + "-" + file.getOriginalFilename());
-                String dirPath = "src/main/java/com/toyStore/toys/infra/uploads/";
                 Path path = Paths.get(dirPath + fileName);
 
                 try {
