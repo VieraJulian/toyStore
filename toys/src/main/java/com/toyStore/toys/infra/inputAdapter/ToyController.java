@@ -20,7 +20,7 @@ public class ToyController {
     @Autowired
     private IToyInputPort inputPort;
 
-    private static final Logger logger =LoggerFactory.getLogger(ToyController.class);
+    private static final Logger logger = LoggerFactory.getLogger(ToyController.class);
 
     @GetMapping("/{id}")
     public ResponseEntity<Toy> getToyById(@PathVariable Long id) {
