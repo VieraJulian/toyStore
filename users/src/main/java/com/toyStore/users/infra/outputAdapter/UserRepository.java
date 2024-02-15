@@ -36,8 +36,6 @@ public class UserRepository implements IUserMethods {
     @Override
     public User getByEmail(String email) {
         return myRepository.findByEmail(email);
-        // User userFound = myRepository.findByEmail(email);
-        // return userFound != null ? userFound : null;
     }
 
     @Override

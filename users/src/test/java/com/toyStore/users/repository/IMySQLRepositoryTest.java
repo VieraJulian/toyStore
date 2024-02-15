@@ -60,7 +60,7 @@ public class IMySQLRepositoryTest {
         assertThat(usersDB.size()).isEqualTo(2);
     }
 
-    @DisplayName("Test to fetch by name user")
+    @DisplayName("Test to fetch by email user")
     @Test()
     void testFindByEmail(){
         User userSaved = myRepository.save(userList.get(0));
@@ -71,5 +71,4 @@ public class IMySQLRepositoryTest {
         assertThat(userDB).isNotNull();
         assertThat(userDB.getId()).isEqualTo(1);
     }
-
 }
