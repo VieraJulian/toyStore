@@ -117,6 +117,6 @@ public class UserUseCase implements IUserInputport {
     public String deleteUser(Long id) {
         userMethods.delete(id);
 
-        return "User with id " + id + "deleted";
+        return "User with id " + id + " deleted";
     }
 }
