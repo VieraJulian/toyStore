@@ -91,7 +91,7 @@ public class ToyController {
         }
     }
 
-    @PatchMapping("/stock/{id}/{quantityToDeduct}")
+    @PutMapping("/stock/{id}/{quantityToDeduct}")
     public ResponseEntity<String> updateStock(@PathVariable Long id, @PathVariable int quantityToDeduct){
         try {
             String msj = inputPort.updateStock(id, quantityToDeduct);
