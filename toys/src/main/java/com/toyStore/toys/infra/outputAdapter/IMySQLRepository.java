@@ -23,6 +23,6 @@ public interface IMySQLRepository extends JpaRepository<Toy, Long> {
 
     @Modifying(clearAutomatically = true)
     @Transactional
-    @Query(value = "UPDATE Toy t SET t.stock = t.stock - :quantityToDeduct WHERE t.id = :id")
+    @Query(value = "UPDATE Toy t SET t.stock = t.stock - :quantityToDeduct WHERE t.id = :id AND t.stock >= :quantityToDeduct")
     void updateStock(@Param("id") Long id, @Param("quantityToDeduct") int quantityToDeduct);
 }
