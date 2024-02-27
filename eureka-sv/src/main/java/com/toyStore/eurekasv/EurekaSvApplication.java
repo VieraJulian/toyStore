@@ -1,4 +1,4 @@
-package com.toyStore.Eureka;
+package com.toyStore.eurekasv;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,10 +6,10 @@ import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 
 @SpringBootApplication
 @EnableEurekaServer
-public class EurekaApplication {
+public class EurekaSvApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(EurekaApplication.class, args);
+		SpringApplication.run(EurekaSvApplication.class, args);
 	}
 
 }

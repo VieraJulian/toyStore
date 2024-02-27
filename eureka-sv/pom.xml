@@ -5,14 +5,14 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.2.2</version>
+		<version>3.2.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.toyStore</groupId>
-	<artifactId>Eureka</artifactId>
+	<artifactId>eureka-sv</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Eureka</name>
-	<description>Demo project for Spring Boot</description>
+	<name>eureka-sv</name>
+	<description>Project for a toy store</description>
 	<properties>
 		<java.version>17</java.version>
 		<spring-cloud.version>2023.0.0</spring-cloud.version>
