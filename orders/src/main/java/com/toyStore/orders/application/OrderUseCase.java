@@ -12,6 +12,7 @@ import com.toyStore.orders.infra.outputport.IOrderProductRepository;
 import com.toyStore.orders.infra.outputport.IOrderRepository;
 import com.toyStore.orders.infra.outputport.IToyServicePort;
 import com.toyStore.orders.infra.outputport.IUserServicePort;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +39,7 @@ public class OrderUseCase implements IOrderInputPort {
 
 
     @Override
+    @CircuitBreaker(name="orders-srv", fallbackMethod="fallbackOrder")
     public OrderDTO createOrder(OrderRequest orderReq) throws UserNotFoundException, ToyNotFoundException, UpdateStockException {
         UserDTO user = userSrv.getUser(orderReq.getUser_id());
 
@@ -111,6 +113,7 @@ public class OrderUseCase implements IOrderInputPort {
     }
 
     @Override
+    @CircuitBreaker(name="orders-srv", fallbackMethod="fallbackOrder")
     public OrderDTO getOrderById(String id) throws OrderNotFoundException, UserNotFoundException, ToyNotFoundException {
         Order orderDB = orderRepository.getById(id);
 
@@ -158,6 +161,7 @@ public class OrderUseCase implements IOrderInputPort {
     }
 
     @Override
+    @CircuitBreaker(name="orders-srv", fallbackMethod="fallbackOrder")
     public OrderDTO getOrderByCodeOperation(String code) throws OrderNotFoundException, UserNotFoundException, ToyNotFoundException {
         Order order = orderRepository.getByCodeOperation(code);
 
@@ -206,6 +210,7 @@ public class OrderUseCase implements IOrderInputPort {
     }
 
     @Override
+    @CircuitBreaker(name="orders-srv", fallbackMethod="fallbackOrders")
     public List<OrderDTO> getAllOrders(int page, int size) throws UserNotFoundException, ToyNotFoundException {
         List<Order> ordersDB = orderRepository.getAllOrders(page, size);
         List<OrderDTO> ordersDTO = new ArrayList<>();
@@ -256,6 +261,7 @@ public class OrderUseCase implements IOrderInputPort {
     }
 
     @Override
+    @CircuitBreaker(name="orders-srv", fallbackMethod="fallbackDeleteOrder")
     public String deleteOrder(String id) throws OrderNotFoundException {
         Order order = orderRepository.getById(id);
 
@@ -272,5 +278,37 @@ public class OrderUseCase implements IOrderInputPort {
         orderRepository.delete(id);
 
         return "Order deleted success";
+    }
+
+    public OrderDTO fallbackOrder(Throwable throwable) {
+        return OrderDTO.builder()
+                .order_id(null)
+                .price(null)
+                .date(null)
+                .codeOperation(null)
+                .user(null)
+                .products(null)
+                .build();
+    }
+
+    public List<OrderDTO> fallbackOrders(int page, int size, Throwable throwable) {
+        List<OrderDTO> orders = new ArrayList<>();
+
+        OrderDTO order = OrderDTO.builder()
+                .order_id(null)
+                .price(null)
+                .date(null)
+                .codeOperation(null)
+                .user(null)
+                .products(null)
+                .build();
+
+        orders.add(order);
+
+        return orders;
+    }
+
+    public String fallbackDeleteOrder(Throwable throwable) {
+        return "Error to delete order";
     }
 }
