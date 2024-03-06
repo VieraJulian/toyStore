@@ -1,0 +1,110 @@
+version: '3.9'
+
+services:
+  eureka-server:
+    container_name: eureka
+    image: eureka
+    build: eureka-sv/
+    restart: always
+    ports:
+      - '8761:8761'
+    networks:
+      - 'dockernetflix-network'
+
+  config-server:
+    container_name: config-server
+    image: config-server
+    build: config-server/
+    restart: always
+    ports:
+      - '8888:8888'
+    networks:
+      - 'dockernetflix-network'
+    depends_on:
+      - eureka-server
+
+  api-gateway:
+    container_name: api-gateway
+    image: api-gateway
+    build: api-gateway/
+    restart: always
+    ports:
+      - '8080:8080'
+    networks:
+      - 'dockernetflix-network'
+    depends_on:
+      - eureka-server
+      - config-server
+
+  mysql-db:
+    container_name: mysql-db
+    image: mysql:8.2.0
+    restart: always
+    ports:
+      - '3306:3306'
+    networks:
+      - 'dockernetflix-network'
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=srv_toys,srv_users
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  mongo-db:
+    container_name: mongo-db
+    image: mongo:latest
+    restart: always
+    ports:
+      - '27017:27017'
+    networks:
+      - 'dockernetflix-network'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js
+
+  toys-service:
+    container_name: toys-srv
+    image: toys-srv
+    build: toys/
+    restart: always
+    ports:
+      - '8081:8081'
+    networks:
+      - 'dockernetflix-network'
+    depends_on:
+      - eureka-server
+      - config-server
+      - mysql-db
+
+  users-service:
+    container_name: users-srv
+    image: users-srv
+    build: users/
+    restart: always
+    ports:
+      - '8082:8082'
+    networks:
+      - 'dockernetflix-network'
+    depends_on:
+      - eureka-server
+      - config-server
+      - mysql-db
+
+  orders-service:
+    container_name: orders-srv
+    image: orders-srv
+    build: orders/
+    restart: always
+    ports:
+      - '8083:8083'
+    networks:
+      - 'dockernetflix-network'
+    depends_on:
+      - eureka-server
+      - config-server
+      - mongo-db
+
+networks:
+  dockernetflix-network:
