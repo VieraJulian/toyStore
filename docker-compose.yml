@@ -49,6 +49,7 @@ services:
       - MYSQL_DATABASE=srv_toys,srv_users
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - mysql-data:/var/lib/mysql
 
   mongo-db:
     container_name: mongo-db
@@ -63,6 +64,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: password
     volumes:
       - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js
+      - mongo-data:/data/db
 
   toys-service:
     container_name: toys-srv
@@ -108,3 +110,7 @@ services:
 
 networks:
   dockernetflix-network:
+
+volumes:
+  mongo-data:
+  mysql-data:
